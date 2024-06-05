@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(#141e30, #243b55);
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #0c111a;
+}
+h1 {
+    text-align: center;
+    color: white;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+label {
+    margin-top: 10px;
+}
+
+select {
+    height: 40px;
+    font-size: large;   
+    border-radius: 5px;
+}
+
+input[type="text"], input[type="file"], input[type="submit"] {
+    padding: 8px;
+    margin-top: 5px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+img {
+    margin-top: 10px;
+    max-width: 100px;
+}
+
+.img-preview {
+    width: 300px;
+    height: auto;
+    margin-top: 10px;
+}
+

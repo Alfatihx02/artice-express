@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/stylesheets/style2.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Tambahkan Artikel</h1>
+    <form action="/store" method="POST" enctype="multipart/form-data">
+      <label for="judul">Judul:</label>
+      <input type="text" id="judul" name="judul" required><br>
+
+      <label for="isi">Kategori:</label>
+      <input type="text" name="kategori" required></input><br>
+
+      <label for="author_id">ID Author:</label>
+      <select name="author_id" id="author_id">
+          <% for (let i = 0; i < data.length; i++) { %>
+              <option value="<%= data[i].id_author %>"><%= data[i].nama_author %></option>
+          <% } %>
+      </select><br>
+  
+      <label for="isi">Isi:</label>
+      <textarea id="isi" name="isi" required></textarea><br>
+  
+      <div>
+        <label for="foto_artikel">Gambar Artikel:</label>
+        <input type="file" id="foto_artikel" name="foto_artikel" required><br>
+        <img id="imgPreview" class="img-preview" src="" alt="Image Preview">
+      </div>
+
+      <input type="submit" value="SUBMIT">
+</div>
+    </form>
+
+
+<script>
+  document.getElementById('foto_artikel').addEventListener('change', function(event) {
+      const [file] = event.target.files;
+      if (file) {
+          document.getElementById('imgPreview').src = URL.createObjectURL(file);
+      }
+  });
+</script>
+
+</body>
+</html>

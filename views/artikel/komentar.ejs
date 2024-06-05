@@ -1,0 +1,17 @@
+<% if (komentar && komentar.length > 0) { %>
+    <div class="comments">
+        <h3>Komentar</h3>
+        <ul>
+            <% komentar.forEach(function(comment) { %>
+                <li>
+                    <strong><%= comment.username %>:</strong> <%= comment.comment_text %>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+<% } else { %>
+    <div class="no-comments">
+        <p>Belum ada komentar.</p>
+        <p>Jadilah yang pertama berkomentar di sini</p>
+    </div>
+<% } %>

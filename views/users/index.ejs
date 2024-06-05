@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USER PROFILE</title>
+    <link rel="stylesheet" href="/stylesheets/users.css">
+    <link rel="stylesheet" href="/stylesheets/nav.css">
+</head>
+<body>
+  <%- include('../partials/__nav') %>
+  <div class="container">
+    <div class="profile-section">
+      <img src="/images/users/<%= foto_profil %>" alt="<%= username %>" class="profile-image">
+      <div class="user-info">
+        <p>Username : <%= username %></p>
+        <p>Email : <%= email %></p>
+        <p>Dibuat : <%= created %></p>
+        <div class="tombol">
+            <a href="/users/updatepwd">
+                <button class="button">CHANGE PASSWORD</button>
+            </a>
+            <a href="/users/edit/<%= id %>">
+                <button class="button">EDIT INFO</button>
+            </a>
+        </div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>

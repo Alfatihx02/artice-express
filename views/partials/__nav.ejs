@@ -1,0 +1,40 @@
+<% if (!session || !session.userID) { %>
+    <header class="header">
+        <a href="/" class="logo">GR NEWS</a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="#">Sepak Bola</a>
+            <a href="#">MotoGP</a>
+            <a href="#">Formula One</a>
+            <a href="/home/login">Login</a>
+        </nav>
+    </header>
+    <div class="nav-bg"></div>
+    <div class="side-navbar">
+        <a href="#home">Home</a>
+        <a href="#article">Article</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </div>
+<% } else { %>
+    <header class="header">
+        <a href="/" class="logo">GR NEWS</a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="#">Sepak Bola</a>
+            <a href="#">MotoGP</a>
+            <a href="#">Formula One</a>
+            <a href="/users">Profile</a>
+            <a href="/home/logout">Logout</a>
+        </nav>
+    </header>
+    <div class="nav-bg"></div>
+    <div class="side-navbar">
+        <a href="#home">Home</a>
+        <a href="#article">Article</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+    </div>
+<% } %>

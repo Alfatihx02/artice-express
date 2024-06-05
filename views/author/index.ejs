@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player Profile</title>
+    <link rel="stylesheet" href="/stylesheets/users.css">
+    <link rel="stylesheet" href="/stylesheets/style1.css">
+</head>
+<body>
+  <%- include('../partials/__nav') %>
+  <div class="container">
+    <% for( let i = 0; i < data.length; i++ ) { %>
+
+    <div class="profile-section">
+      <div class="user-info">
+        <p>Username : <%= data[i].nama_author %></p>
+        <p>Email : <%= data[i].user_id %></p>
+        <div class="tombol">
+            <a href="/produk/edit/<%= data[i].id_author %>"><button class="button">EDIT</button></a>               
+                
+                <a href="/produk/delete/<%= data[i].id_author %>"><button class="d-button">EDIT INFO</button></a>
+        </div>
+    </div>
+    </div>
+    <% } %>
+  </div>
+</body>
+</html>

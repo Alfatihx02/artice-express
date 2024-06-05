@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/stylelogin.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="login-box">
+        <%- include('../partials/__message') %>
+        <h2>LOGIN</h2>
+        <form action="/home/log" method="POST">
+            <div class="user-box">
+                <input type="email" name="email" required>
+                <label>Email</label>
+            </div>
+            <div class="user-box">
+                <input type="password" id="password" name="password" required>
+                <label>Password</label>
+                <!-- Wrapper for the checkbox and label -->
+                <div class="checkbox-wrapper">
+                    <i class='bx bx-low-vision' id="togglePassword"></i>
+                    <label for="togglePassword" class="toggle-password-label"></label>
+                </div>
+            </div>
+            
+            
+            <div class="button-container">
+                <button type="submit">
+                    Login
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <h3>belum mempunyai akun?</h3>
+            <div class="button-container">
+                <a href="/register">
+                    Register
+                </a>
+            </div>
+        </form>
+
+        <script>
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('password');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    this.classList.remove('bx-low-vision');
+                    this.classList.add('bx-show');
+                } else {
+                    passwordInput.type = 'password';
+                    this.classList.remove('bx-show');
+                    this.classList.add('bx-low-vision');
+                }
+            });
+        </script>
+        
+        
+</body>
+</html>

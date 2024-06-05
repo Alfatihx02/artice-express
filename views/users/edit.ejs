@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="/stylesheets/style2.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <form action="/users/update/<%= id %>" method="POST" enctype="multipart/form-data">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<%= username %>" required>
+            
+            <label for="foto_profil">Foto Profil:</label>
+            <input type="file" id="foto_profil" name="foto_profil">
+            <% if (foto_profil) { %>
+                <img src="/images/users/<%= foto_profil %>" alt="Foto Profil">
+                <input type="hidden" name="old_foto_profil" value="<%= foto_profil %>">
+            <% } %>
+            
+            <input type="submit" value="Update Profile">
+        </form>
+    </div>
+</body>
+</html>

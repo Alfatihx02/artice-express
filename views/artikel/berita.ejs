@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= berita.judul %></title>
+    <link rel="stylesheet" href="/stylesheets/berita.css">
+    <link rel="stylesheet" href="/stylesheets/nav.css">
+</head>
+<body>
+    
+    <%- include('../partials/__nav') %>     
+    <%- include('../partials/__message') %>
+    <main>
+        <div class="content-wrapper">
+            <article>
+                <h1><%= berita.judul %></h1>
+                <p class="author">Penulis : <%= berita.nama_author %></p> <!--nama author dari tabel author-->
+                <p class="date"><%= berita.created_at %></p>
+                <div class="share">
+                    Bagikan:
+                    <a href="facebook.com">Facebook</a>
+                </div>
+                <img src="/images/<%= berita.foto_artikel %>" alt="<%= berita.judul %>" class="article-image">
+                <div class="content">
+                    <p><strong>Sumenep, GR News -- <%= berita.kategori %></strong><% berita.isi.forEach(function(paragraph) { %>
+                        <p><%= paragraph %></p>
+                      <% }); %></p>
+                </div>
+
+                <div class="comment-section">
+                    <form action="/komentar/store/<%= berita.id_artikel %>" method="POST">
+                        <div class="comment-input-area">
+                            <textarea id="comment_text" name="comment_text" placeholder="Tulis Komentar" rows="4"></textarea>
+                            <input type="hidden" name="artikel_id" value="<%= berita.artikel_id %>">
+                            <input type="hidden" name="user_id" value="<%= session.userID %>">
+                            <button type="submit">Kirim</button>
+                        </div>
+                    </form>
+                
+                    <% if (komentar.length > 0) { %>
+                        <div class="comments">
+                            <h3>Komentar</h3>
+                            <ul>
+                                <% for (let i = 0; i < komentar.length; i++) { %>
+                                    <% let comment = komentar[i]; %>
+                                    <% if (comment.id_artikel === berita.id_artikel) { %>
+                                        <li class="komentar">
+                                            <div class="profile-pictures">
+                                                <img src="/images/users/<%= comment.foto_profil %>" alt="<%= comment.username %>">
+                                            </div>
+                                            <div class="comment-text">
+                                                <p class="username"><strong><%= comment.username %>:</strong></p>
+                                                <p class="text"><%= comment.comment_text %></p>
+
+                                                <% if (comment.user_id == session.userID) { %>
+                                                    <button onclick="showEditForm('<%= comment.komentar_id %>')">Edit</button>
+                                                    <button onclick="deleteComment('<%= comment.komentar_id %>')">Delete</button>
+                        
+                                                    <!-- Form untuk edit -->
+                                                    <div id="edit-form-<%= comment.komentar_id %>" style="display:none;">
+                                                        <textarea id="edit-textarea-<%= comment.komentar_id %>"><%= comment.comment_text %></textarea>
+                                                        <button onclick="saveComment('<%= comment.komentar_id %>')">Save</button>
+                                                        <button onclick="cancelEdit('<%= comment.komentar_id %>')">Cancel</button>
+                                                    </div>
+                                                <% } %>
+
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                <% } %>
+                            </ul>
+                        </div>
+                    <% } else { %>
+                        <div class="no-comments">
+                            <p>Belum ada komentar.</p>
+                            <p>Jadilah yang pertama berkomentar di sini</p>
+                        </div>
+                    <% } %>
+                </div>
+
+                <script>
+                    function showEditForm(id) {
+                        const editForm = document.getElementById(`edit-form-${id}`);
+                        editForm.style.display = 'block';
+                    }
+                    
+                    function cancelEdit(id) {
+                        const editForm = document.getElementById(`edit-form-${id}`);
+                        editForm.style.display = 'none';
+                    }
+                    
+                    function saveComment(id) {
+                        const editTextarea = document.getElementById(`edit-textarea-${id}`);
+                        const newComment = editTextarea.value;
+                    
+                        fetch(`/komentar/update/${id}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ comment_text: newComment })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                const commentSpan = document.getElementById(`komentar-${id}`);
+                                commentSpan.textContent = newComment;
+                                cancelEdit(id);
+                            } else {
+                                alert('Terjadi kesalahan saat menyimpan komentar.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat menyimpan komentar.');
+                        });
+                    }
+                    
+                    function deleteComment(id) {
+                        if (confirm('Apakah Anda yakin ingin menghapus komentar ini?')) {
+                            fetch(`/komentar/delete/${id}`, {
+                                method: 'DELETE'
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert('Komentar berhasil dihapus');
+                                    const commentElement = document.getElementById(`komentar-li-${id}`);
+                                    commentElement.parentNode.removeChild(commentElement);
+                                } else {
+                                    alert('Gagal menghapus komentar');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Terjadi kesalahan saat menghapus komentar');
+                            });
+                        }
+                    }
+                    </script>
+                    
+
+                </div>
+            </article>
+            <aside class="popular-news">
+                <h2>TERPOPULER</h2>
+                <% let maxPopular = Math.min(3, popular.length); %>
+                    <% for( let i = 0; i < maxPopular ; i++ ) { %>
+                        <div class="item">
+                            <img src="/images/<%= popular[i].foto_artikel %>" alt="<%= popular[i].judul %>">
+                            <div>
+                                <a href="/berita/<%= popular[i].id_artikel %>"><h3><%= popular[i].judul %></h3></a>
+                            </div>
+                        </div>
+                    <% } %>
+            </aside>
+        </div>
+    </main>
+     <%- include('../partials/__foot') %>
+    <script>
+        const menuIcon = document.querySelector('#menu-icon');
+        const navbar = document.querySelector('.navbar');
+        const navbg = document.querySelector('.nav-bg');
+        const sideNavbar = document.querySelector('.side-navbar');
+        menuIcon.addEventListener('click', () => {
+            menuIcon.classList.toggle('bx-x');
+            navbar.classList.toggle('active');
+            navbg.classList.toggle('active');
+            sideNavbar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Author</title>
+</head>
+<body>
+    <h1>Create Author</h1>
+    <form action="/author/store" method="POST">
+        <label for="nama_author">Nama Author:</label>
+        <input type="text" id="nama_author" name="nama_author" required><br>
+
+        <label for="user_id">User ID:</label>
+        <select name="user_id" id="user_id">
+            <% for (let i = 0; i < data.length; i++) { %>
+                <option value="<%= data[i].user_id %>"><%= data[i].username %></option>
+            <% } %>
+        </select><br>
+
+        <input type="submit" value="Simpan">
+    </form>
+</body>
+</html>

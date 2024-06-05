@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Artikel</title>
+  <link rel="stylesheet" href="/stylesheets/style2.css">
+</head>
+<body>
+  <div class="container">
+
+    <h1>Edit Artikel</h1>
+    <form action="/update/<%= id_artikel %>" method="POST" enctype="multipart/form-data">
+      <label for="judul">Judul:</label>
+      <input type="text" id="judul" name="judul" value="<%= judul %>" required><br>
+  
+      <label for="kategori">Kategori:</label>
+      <input type="text" id="kategroi" name="kategori" value="<%= kategori %>"required><br>
+  
+      <label for="author_id">ID Author:</label>
+        <select name="author_id" id="author_id">
+            <% for (let i = 0; i < data.length; i++) { %>
+                <option value="<%= data[i].id_author %>"><%= data[i].nama_author %></option>
+            <% } %>
+        </select><br>
+  
+      <label for="isi">Isi:</label>
+      <textarea id="isi" name="isi" required><%= isi %></textarea><br>
+  
+      <div>
+        <label for="foto_artikel">Gambar Artikel:</label>
+        <input type="file" id="foto_artikel" name="foto_artikel"><br>
+        <img src="/images/<%= foto_artikel %>" alt="<%= judul %>"width="100">
+        <img id="imgPreview" class="img-preview" src="" alt="Image Preview">
+      </div>
+  
+      <input type="submit" value="Simpan Perubahan">
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('foto_artikel').addEventListener('change', function(event) {
+        const [file] = event.target.files;
+        if (file) {
+            document.getElementById('imgPreview').src = URL.createObjectURL(file);
+        }
+    });
+  </script>
+</body>
+</html>
